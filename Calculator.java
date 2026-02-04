@@ -17,7 +17,7 @@ class Sum{
 // design question parameter passing in constructor and passing parameter in function
 
 public class Calculator {
-    public static void main(String[] args) {
+    public static void main(String[] args) {area
         Scanner sc=new Scanner(System.in);
         System.out.println("enter 1 number");
         int a=sc.nextInt();
