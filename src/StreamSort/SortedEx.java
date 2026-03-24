@@ -2,8 +2,8 @@ package StreamSort;
 import java.util.*;
 import java.util.stream.IntStream;
 
-public class SortedEx {
-    public static void main(String[] args) {
+//public class SortedEx {
+//    public static void main(String[] args) {
 //        List <Integer> list=Arrays.asList(23,12,1,45,23,76,26,91);
 //        System.out.println(list);
 //        List <Integer> list2= list.stream().sorted((a,b)->b-a).toList();// it is valid
@@ -57,7 +57,49 @@ public class SortedEx {
 //        List<String> sortedlist=list.stream().sorted((a,b)->b.length()-a.length()).toList();
 //        System.out.println(sortedlist);
 
+  //17.
+        //List<employee> list=new ArrayList();
+        //list.add(new Employee(1,"Alok",200000,"IT");
+       // we have 5 elements in the list : like e1,e2,e3,e4 and e5
+     //   Sort the list with salary and department value;
 
+        class Employee
+        {
+            int id;
+            String name;
+            int salary;
+            String dept;
+
+            @Override
+            public String toString() {
+                return "Employee{" +
+                        "id=" + id +
+                        ", name='" + name + '\'' +
+                        ", salary=" + salary +
+                        ", dept='" + dept + '\'' +
+                        '}';
+            }
+
+            Employee(int id, String name, int salary, String dept)
+            {
+                this.id = id;
+                this.name = name;
+                this.salary = salary;
+                this.dept = dept;
+            }
+
+
+        }
+public class SortedEx {
+    public static void main(String[] args)
+    {
+        List<Employee> list=new ArrayList();
+        list.add(new Employee(1,"alok",2000,"ai"));
+        list.add(new Employee(2,"bob",3000,"mca"));
+        list.add(new Employee(3,"alokraj",2000,"mba"));
+
+        List<Employee> list2=list.stream().sorted(((e1,e2)->e1.salary-e2.salary)).toList();
+        System.out.println(list2);
 
     }
 }
