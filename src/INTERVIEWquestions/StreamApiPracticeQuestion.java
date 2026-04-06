@@ -18,6 +18,6 @@ public class StreamApiPracticeQuestion {
 
         //3.  find the sum of square of even number greator than 10
         List<Integer> list = Arrays.asList(15,22,8,40,12,35,50,5);
-        list.stream().
+
     }
 }

@@ -40,17 +40,17 @@ public class Employee
 {
     public static void main(String[] args) {
 
-ArrayList<Employee1> empList = new ArrayList<>(Arrays.asList(
-        new Employee1(101, "Amit", 50000, 25, "IT"),
-        new Employee1(102, "Neha", 60000, 28, "HR"),
-        new Employee1(103, "Ravi", 45000, 24, "IT"),
-        new Employee1(104, "Karan", 70000, 30, "Finance"),
-        new Employee1(105, "Pooja", 55000, 27, "HR"),
-        new Employee1(106, "Rohit", 80000, 32, "IT"),
-        new Employee1(107, "Simran", 65000, 29, "Finance"),
-        new Employee1(108, "Amit", 50000, 25, "IT")
-     //   Optional<Employee1> result=empList.stream().min((a,b)->a.compareTo(b);
-));
+        ArrayList<Employee1> empList = new ArrayList<>(Arrays.asList(
+                new Employee1(101, "Amit", 50000, 25, "IT"),
+                new Employee1(102, "Neha", 60000, 28, "HR"),
+                new Employee1(103, "Ravi", 45000, 24, "IT"),
+                new Employee1(104, "Karan", 70000, 30, "Finance"),
+                new Employee1(105, "Pooja", 55000, 27, "HR"),
+                new Employee1(106, "Rohit", 80000, 32, "IT"),
+                new Employee1(107, "Simran", 65000, 29, "Finance"),
+                new Employee1(108, "Amit", 50000, 25, "IT")
+                //   Optional<Employee1> result=empList.stream().min((a,b)->a.compareTo(b);
+        ));
 // find minimum salary wale ka naam?
 //        Optional<Employee1> result = empList.stream()
 //                .min((a, b) -> (int)(a.getSalary() - b.getSalary()));
@@ -155,17 +155,81 @@ ArrayList<Employee1> empList = new ArrayList<>(Arrays.asList(
 //                // small age first
 //             .limit(3).forEach(System.out::println);
 
-       // System.out.println(top2);
+        // System.out.println(top2);
 //20. remove duplicate employee and print the first 5 employees
-        empList.stream()
-                .collect(Collectors.toMap(
-                        Employee1::getName,   // key (duplicate remove yahin se hoga)
-                        e -> e,               // value
-                        (e1, e2) -> e1        // duplicate aaye to pehla rakho
-                ))
-                .values()
-                .stream()
-                .limit(5)
-                .forEach(System.out::println);;
+//        empList.stream()
+//                .collect(Collectors.toMap(
+//                        Employee1::getName,   // key (duplicate remove yahin se hoga)
+//                        e -> e,               // value
+//                        (e1, e2) -> e1        // duplicate aaye to pehla rakho
+//                ))
+//                .values()
+//                .stream()
+//                .limit(5)
+//                .forEach(System.out::println);;
+
+        //4.fibd the largest even number using stream API
+//        List<Integer> list=Arrays.asList(21,18,33,44,55,60,17);
+//        List< Integer> result=list.stream().filter(n->n%2==0).max((a,b)->a-b)).toList());
+//        System.out.println(result);
+//    }
+//}//5. sort the list and remove the first 2 largest value then print the remaining elements
+//List<Integer> list=Arrays.asList(10,50,30,20,60,40,70);
+//    list.stream().
+        //7.find the sum of number between 10 and 40
+//        List<Integer> list = Arrays.asList(5, 15, 25, 35, 45, 20, 10);
+//        int sum = list.stream()
+//                .filter(n -> n >= 10 && n <= 40) // 10 se 40 ke beech
+//                .reduce(0, (a, b) -> a + b);     // sum
+//
+//        System.out.println(sum);
+
+        //8 .find the third largest number
+       // List<Integer> list = Arrays.asList(5, 15, 25, 35, 45, 20, 10);
+//        Optional<Integer> result = list.stream()
+//                .sorted(Comparator.reverseOrder()) // descending
+//                .skip(2)                           // 3rd largest
+//                .findFirst();
+//
+//        System.out.println(result.get());
+        // 9.convert numbers into squares and print only the top 4 values
+//        List<Integer> list = Arrays.asList(5, 15, 25, 35, 45, 20, 10);
+//               List<Integer> result = list.stream().map(n->n*n).limit(4).toList();
+//               System.out.println(result);
+
+
+        //10. find the sum of smallest 4 number
+//        List<Integer> list = Arrays.asList(5, 15, 25, 35, 45, 20, 10);
+//        int sum=list.stream().mapToInt(x->x).sum();
+//        System.out.println(sum);
+
+        //12. find the smallest odd number greator than 20
+//              List<Integer> list = Arrays.asList(5, 15, 25, 35, 45, 20, 10);
+//              List<Integer> sum=list.stream().filter(n->n%2!=0 && n>20).sorted().toList();
+//              System.out.println(sum)
+//              ;
+        //13. find the product of all number greator than 5
+//        List<Integer> list = Arrays.asList(5, 15, 25, 35, 45, 20, 10);
+//        int prod = list.stream()
+//                .filter(n -> n > 5)
+//                .reduce(1, (a, b) -> a * b);
+//
+//        System.out.println(prod);
+
+        //14. sort the list ,skip the first 2 smallest number then find the minimum value
+//                     List<Integer> list = Arrays.asList(5, 15, 25, 35, 45, 20, 10);
+//        int res = list.stream().sorted().skip(2).toList().getFirst();
+//        System.out.println(res);
+
+        //17 skip the largest 3 numbers and find the minimum value
+        List<Integer> list = Arrays.asList(5, 15, 25, 35, 45, 20, 10);
+        Optional<Integer> result = list.stream()
+                .sorted(Comparator.reverseOrder()) // descending
+                .skip(3)                           // skip largest 3
+                .min(Integer::compareTo);          // find min
+
+        System.out.println(result.get());
+
     }
-}
+    }
+
