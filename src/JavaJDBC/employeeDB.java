@@ -11,54 +11,74 @@ public class employeeDB {
         String username = "root";
         String password = "Alok@8171";
 
-        String create_table = """
-            CREATE TABLE IF NOT EXISTS employee (
-                id INT PRIMARY KEY,
-                name VARCHAR(100),
-                salary DOUBLE,
-                department VARCHAR(50)
-            )
-        """;
-
         try {
+            // 1️⃣ Load JDBC Driver
             Class.forName(driver);
             System.out.println("Driver loaded successfully");
 
+            // 2️⃣ Connect to Database
             Connection connection = DriverManager.getConnection(host, username, password);
             System.out.println("Connected to database");
 
-            Statement statement = connection.createStatement();
+            Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
-            // Create table
-            statement.execute(create_table);
+            // 3️⃣ Drop table if exists (clean start)
+            statement.executeUpdate("DROP TABLE IF EXISTS employee");
+
+            // 4️⃣ Create table with AUTO_INCREMENT ID
+            statement.executeUpdate("""
+                CREATE TABLE employee (
+                    id INT PRIMARY KEY AUTO_INCREMENT,
+                    name VARCHAR(100),
+                    salary DOUBLE,
+                    department VARCHAR(50)
+                )
+            """);
             System.out.println("Table is ready");
-            ResultSet rs=statement.executeQuery("SELECT * FROM employee");
-            System.out.println("ID | NAME | SALARY | DEPARTMENT");
+
+            // 5️⃣ Insert sample data WITHOUT id (AUTO_INCREMENT handles it)
+            statement.executeUpdate("""
+                INSERT INTO employee(name, salary, department)
+                VALUES ('Alok', 4000, 'HR'),
+                       ('Rahul', 6000, 'IT'),
+                       ('Amit', 7000, 'CS')
+            """);
+            System.out.println("Data inserted successfully");
+
+            // 6️⃣ Update salary > 5000 (+2000)
+            int rowsUpdated = statement.executeUpdate(
+                    "UPDATE employee SET salary = salary + 2000 WHERE salary > 5000"
+            );
+            System.out.println("Rows updated: " + rowsUpdated);
+
+            // 7️⃣ Fetch and display data
+            ResultSet rs = statement.executeQuery("SELECT * FROM employee");
+
+            System.out.println("\nID | NAME  | SALARY | DEPARTMENT");
+            System.out.println("-------------------------------");
+
+            while (rs.next()) {
+                rs.moveToInsertRow();
+                rs.updateString("name","id");
+                rs.updateDouble("salary",8000);
+                rs.updateString("department",rs.getString("department"));
+                break;
+            }
+
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
-                long salary = rs.getLong("salary");
+                double salary = rs.getDouble("salary");
                 String department = rs.getString("department");
-                System.out.println(String.format("%d |%s |%d| %s",id,name,salary,department));
-            }
-//            statement.executeUpdate("""
-//              INSERT INTO employee(id,name,salary,department)
-//              VALUES (3,' raj',50000,'cs')
-//           """);
-            // Insert data
-//            int rowAffected = statement.executeUpdate("""
-//                INSERT INTO employee(id,name,salary,department)
-//                VALUES (1,'alok',400000,'hr')
-//            """);
-//
-//            if (rowAffected > 0) {
-//                System.out.println("Record inserted successfully");
-//            } else {
-//                System.out.println("Record not inserted");
-//            }
 
-        }
-        catch (ClassNotFoundException | SQLException e) {
+                System.out.printf("%d | %s | %.2f | %s\n", id, name, salary, department);
+            }
+
+            // 8️⃣ Close connection
+            connection.close();
+            System.out.println("\nConnection closed");
+
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }
